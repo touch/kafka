@@ -16,10 +16,14 @@
  */
 
 import sbt._
+import FileUtilities._
+import java.io.File
 import scala.xml.{Node, Elem, NodeSeq}
-import scala.xml.transform.{RewriteRule, RuleTransformer}
+import scala.xml.transform._
 
 class KafkaProject(info: ProjectInfo) extends ParentProject(info) with IdeaProject {
+
+
   lazy val core = project("core", "core-kafka", new CoreKafkaProject(_))
   lazy val examples = project("examples", "java-examples", new KafkaExamplesProject(_), core)
   lazy val contrib = project("contrib", "contrib", new ContribProject(_))
@@ -59,6 +63,61 @@ class KafkaProject(info: ProjectInfo) extends ParentProject(info) with IdeaProje
       <dependency org="com.github.sgroschupf" name="zkclient" rev="0.1">
       </dependency>
     </dependencies>
+
+
+
+		override def pomExtra =
+		    <build>
+		      <plugins>
+		        <plugin>
+		          <groupId>org.scala-tools</groupId>
+		          <artifactId>maven-scala-plugin</artifactId>
+		          <executions>
+		            <execution>
+		              <goals>
+		                <goal>compile</goal>
+		                <goal>testCompile</goal>
+		              </goals>
+		            </execution>
+		          </executions>
+		          <version>2.9.2</version>
+		        </plugin>
+		      </plugins>
+		    </build>
+		
+		
+		
+		
+			  override def pomPostProcess(pom: Node): Node =
+			    if(subProjects.size > 0) PackagingTypeChanger(pom)
+			  else pom	
+
+			  lazy val multimoduleProject =
+			    <artifactId>{name}</artifactId> ++
+			  <packaging>pom</packaging> ++
+			  <modules>{
+			      subProjects.keys.map(module => <module>{module}</module>)
+			    }</modules>
+
+			  object PackagingTypeChanger extends RuleTransformer(new RewriteRule() {
+			      override def transform(node: Node): Seq[Node] = node match {
+			        case elem @ Elem(_, "packaging", _, _, _)  => multimoduleProject
+			        case other => other
+			      }
+			    })
+			
+			
+			
+				  lazy val mavenize = task {
+				    log.info("Mavenizing project " + name)
+				    val pomPath = info.projectPath / "pom.xml"
+				    touch(pomPath, log)
+				    (outputPath ** "*.pom").get.foreach(copyFile(_, pomPath, log))
+				    None
+				  } dependsOn(makePom)
+				
+				
+		
 
     override def artifactID = "kafka"
     override def filterScalaJars = false
