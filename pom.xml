@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>kafka</groupId>
+    <artifactId>kafka_2.9.2</artifactId>
+    <packaging>pom</packaging>
+    <version>0.7.2</version>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.rat</groupId>
+            <artifactId>apache-rat</artifactId>
+            <version>0.8</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>kafka</groupId>
+            <artifactId>core-kafka_2.9.2</artifactId>
+            <version>0.7.2</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>kafka</groupId>
+            <artifactId>contrib_2.9.2</artifactId>
+            <version>0.7.2</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>kafka</groupId>
+            <artifactId>perf_2.9.2</artifactId>
+            <version>0.7.2</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>kafka</groupId>
+            <artifactId>java-examples_2.9.2</artifactId>
+            <version>0.7.2</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+    <repositories>
+        <repository>
+            <id>ScalaToolsMaven2Repository</id>
+            <name>Scala-Tools Maven2 Repository</name>
+            <url>http://scala-tools.org/repo-releases/</url>
+        </repository>
+    </repositories>
+</project>
