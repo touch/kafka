@@ -73,5 +73,10 @@
             <name>Scala-Tools Maven2 Repository</name>
             <url>http://scala-tools.org/repo-releases/</url>
         </repository>
+        <repository>
+            <id>JBossrepository</id>
+            <name>JBoss repository</name>
+            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+        </repository>
     </repositories>
 </project>
