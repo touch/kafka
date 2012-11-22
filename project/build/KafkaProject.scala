@@ -289,6 +289,7 @@ class KafkaProject(info: ProjectInfo) extends ParentProject(info) with IdeaProje
   }
 
   trait CoreDependencies {
+    val nexus = "JBoss repository" at "https://repository.jboss.org/nexus/content/groups/public"
     val log4j = "log4j" % "log4j" % "1.2.15"
     val jopt = "net.sf.jopt-simple" % "jopt-simple" % "3.2"
   }
